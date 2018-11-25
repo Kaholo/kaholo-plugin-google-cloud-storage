@@ -1,14 +1,14 @@
 {
-  "name": "pm-plugin-googlecloudstorage",
-  "version": "1.0.0",
-  "description": "Google cloud storage plugin for Productionmap",
+  "name": "kaholo-plugin-googlecloudstorage",
+  "version": "1.2.0",
+  "description": "Google cloud storage plugin for Kaholo",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Productionmap team (Roy Talyosef)",
+  "author": "Kaholo Team",
   "license": "ISC",
   "dependencies": {
-    "@google-cloud/storage": "^1.6.0"
+    "@google-cloud/storage": "1.6.0"
   }
 }

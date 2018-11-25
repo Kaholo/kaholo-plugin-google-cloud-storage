@@ -42,24 +42,8 @@ function bucketOperations(action) {
     });
 }
 
-
-function main(argv) {
-    if (argv.length < 3) {
-        console.log('{err: "not enough parameters"}');
-        // Invalid Argument
-        // Either an unknown option was specified, or an option requiring a value was provided without a value.
-        process.exit(9);
-    }
-    const action = JSON.parse(argv[2]);
-    bucketOperations(action).then((res) => {
-        console.log(res);
-        process.exit(0); // Success
-    }).catch((err) => {
-        console.log("an error occured", err);
-        // Uncaught Fatal Exception
-        // There was an uncaught exception, and it was not handled by a domain or an 'uncaughtException' event handler.
-        process.exit(1); // Failure
-    });
+module.exports = {
+    CREATE_BUCKET : bucketOperations,
+    DELETE_BUCKET : bucketOperations,
+    UPLOAD_FILE : bucketOperations
 }
-
-main(process.argv);
