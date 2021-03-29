@@ -1,6 +1,6 @@
 {
   "name": "kaholo-plugin-googlecloudstorage",
-  "version": "1.2.0",
+  "version": "1.0.1",
   "description": "Google cloud storage plugin for Kaholo",
   "main": "app.js",
   "scripts": {

@@ -4,99 +4,86 @@
   "exposeRoute": false,
   "execProgram": "node",
   "main": "app.js",
-  "version": "1.0.0",
+  "version": "1.0.1",
+  "imgUrl": "logo.png",
   "methods": [
     {
       "name": "CREATE_BUCKET",
-      "viewName": "create new bucket",
+      "viewName": "Create New Bucket",
       "params": [
         {
           "name": "PROJECT",
-          "viewName": "project id",
+          "viewName": "Project ID",
           "type": "string"
         },
         {
           "name": "NAME",
-          "viewName": "name",
+          "viewName": "Name",
           "type": "string"
         },
         {
           "name": "CREDENTIALS",
-          "viewName": "key file value",
+          "viewName": "Key File Value",
           "type": "string"
         },
         {
           "name": "CLASS",
-          "viewName": "storage class",
+          "viewName": "Storage Class",
           "type": "string"
         },
         {
           "name": "LOCATION",
-          "viewName": "location",
+          "viewName": "Location",
           "type": "string"
         }
-      ],
-      "actionString": "create bucket: NAME CLASS PROJECT LOCATION "
+      ]
     },
     {
       "name": "DELETE_BUCKET",
-      "viewName": "delete bucket",
+      "viewName": "Delete Bucket",
       "params": [
         {
           "name": "PROJECT",
-          "viewName": "project id",
+          "viewName": "Project ID",
           "type": "string"
         },
         {
           "name": "NAME",
-          "viewName": "name",
+          "viewName": "Name",
           "type": "string"
         },
         {
           "name": "CREDENTIALS",
-          "viewName": "key file value",
-          "type": "string"
-        },
-        {
-          "name": "CLASS",
-          "viewName": "storage class",
-          "type": "string"
-        },
-        {
-          "name": "LOCATION",
-          "viewName": "location",
+          "viewName": "Key File Value",
           "type": "string"
         }
-      ],
-      "actionString": "create bucket: NAME CLASS PROJECT LOCATION "
+      ]
     },
     {
       "name": "UPLOAD_FILE",
-      "viewName": "upload file",
+      "viewName": "Upload File",
       "params": [
         {
           "name": "PROJECT",
-          "viewName": "project id",
+          "viewName": "Project ID",
           "type": "string"
         },
         {
           "name": "NAME",
-          "viewName": "bucket name",
+          "viewName": "Bucket Name",
           "type": "string"
         },
         {
           "name": "CREDENTIALS",
-          "viewName": "key file value",
+          "viewName": "Key File Value",
           "type": "string"
         },
         {
           "name": "FILE_PATH",
-          "viewName": "file_path",
+          "viewName": "File Path",
           "type": "string"
         }
-      ],
-      "actionString": "create bucket: NAME CLASS PROJECT LOCATION "
+      ]
     }
-  ],
-  "imgUrl": "logo.png"
+  ]
 }
