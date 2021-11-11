@@ -4,7 +4,7 @@
   "exposeRoute": false,
   "execProgram": "node",
   "main": "app.js",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "imgUrl": "logo.png",
   "methods": [
     {
@@ -23,8 +23,8 @@
         },
         {
           "name": "CREDENTIALS",
-          "viewName": "Key File Value",
-          "type": "string"
+          "viewName": "Credentials",
+          "type": "vault"
         },
         {
           "name": "CLASS",
@@ -54,8 +54,8 @@
         },
         {
           "name": "CREDENTIALS",
-          "viewName": "Key File Value",
-          "type": "string"
+          "viewName": "Credentials",
+          "type": "vault"
         }
       ]
     },
@@ -75,8 +75,8 @@
         },
         {
           "name": "CREDENTIALS",
-          "viewName": "Key File Value",
-          "type": "string"
+          "viewName": "Credentials",
+          "type": "vault"
         },
         {
           "name": "FILE_PATH",
