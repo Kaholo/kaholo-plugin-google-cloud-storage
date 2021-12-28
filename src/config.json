@@ -4,8 +4,9 @@
   "exposeRoute": false,
   "execProgram": "node",
   "main": "app.js",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "imgUrl": "logo.png",
+  "category": ["CLOUD", "STORAGE"],
   "methods": [
     {
       "name": "CREATE_BUCKET",
