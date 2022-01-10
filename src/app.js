@@ -13,14 +13,13 @@ function authenticate(projectId, credentials) {
     });
 }
 
-function bucketOperations(action) {
-    return new Promise((resolve, reject) => {
+async function bucketOperations(action) {
         const s = authenticate(action.params.PROJECT, action.params.CREDENTIALS);
 
         let name = action.params.NAME;
         let bucket = s.bucket(name);
 
-
+        
         switch (action.method.name) {
             case 'CREATE_BUCKET':
                 let metadata = {};
@@ -30,16 +29,17 @@ function bucketOperations(action) {
                 if (action.params.CLASS) {
                     metadata[action.params.CLASS] = true;
                 }
-                return bucket.create(metadata);
+                return await s.createBucket(name, metadata)
+
             case 'DELETE_BUCKET':
-                return bucket.delete();
+                return await s.bucket(name).delete()
+
             case 'UPLOAD_FILE':
-                return bucket.upload(action.params.FILE_PATH);
+                return await bucket.upload(action.params.FILE_PATH);
             default:
                 throw new Error("Unknown method");
         }
 
-    });
 }
 
 module.exports = {
