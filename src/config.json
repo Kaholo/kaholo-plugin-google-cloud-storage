@@ -34,22 +34,33 @@
         {
           "name": "PROJECT",
           "viewName": "Project ID",
-          "type": "string"
+          "type": "string",
+          "description": "The ID of the default project to send requests to.",
+          "placeholder": "my-project",
+          "learnUrl": "https://cloud.google.com/docs/authentication/production"
         },
         {
           "name": "CREDENTIALS",
           "viewName": "Credentials",
-          "type": "vault"
+          "type": "vault",
+          "description": "Default service account credentials",
+          "learnUrl": "https://cloud.google.com/docs/authentication/production"
         },
         {
           "name": "NAME",
           "viewName": "Bucket Name",
-          "type": "string"
+          "type": "string",
+          "description": "The name of the bucket",
+          "placeholder": "my-bucket",
+          "learnUrl": "https://cloud.google.com/storage/docs/creating-buckets"
         },  
         {
           "name": "CLASS",
           "viewName": "Storage Class",
           "type": "options",
+          "description": "The name of the bucket",
+          "placeholder": "my-bucket",
+          "learnUrl": "https://cloud.google.com/storage/docs/creating-buckets",
           "options": [
             {
               "id": "STANDARD",
@@ -72,7 +83,10 @@
         {
           "name": "LOCATION",
           "viewName": "Location",
-          "type": "string"
+          "type": "string",
+          "description": "Cloud Loaction",
+          "placeholder": "us-west2",
+          "learnUrl": "https://cloud.google.com/about/locations"
         }
       ]
     },
@@ -85,19 +99,27 @@
         {
           "name": "PROJECT",
           "viewName": "Project ID",
-          "type": "string"
+          "type": "string",
+          "description": "The ID of the default project to send requests to.",
+          "placeholder": "my-project",
+          "learnUrl": "https://cloud.google.com/docs/authentication/production"
         },
         {
           "name": "CREDENTIALS",
           "viewName": "Credentials",
-          "type": "vault"
+          "type": "vault",
+          "description": "Default service account credentials",
+          "learnUrl": "https://cloud.google.com/docs/authentication/production"
         },
         {
           "name": "NAME",
           "viewName": "Bucket Name",
           "type": "autocomplete",
           "autocompleteType": "function",
-          "functionName": "listBuckets"
+          "functionName": "listBuckets",
+          "description": "The name of the bucket",
+          "placeholder": "my-bucket",
+          "learnUrl": "https://cloud.google.com/storage/docs/deleting-buckets"
         }
       ]
     },
@@ -110,24 +132,35 @@
         {
           "name": "PROJECT",
           "viewName": "Project ID",
-          "type": "string"
+          "type": "string",
+          "description": "The ID of the default project to send requests to.",
+          "placeholder": "my-project",
+          "learnUrl": "https://cloud.google.com/docs/authentication/production"
         },
         {
           "name": "CREDENTIALS",
           "viewName": "Credentials",
-          "type": "vault"
+          "type": "vault",
+          "description": "Default service account credentials",
+          "learnUrl": "https://cloud.google.com/docs/authentication/production"
         },
         {
           "name": "NAME",
           "viewName": "Bucket Name",
           "type": "autocomplete",
           "autocompleteType": "function",
-          "functionName": "listBuckets"
+          "functionName": "listBuckets",
+          "description": "The name of the bucket",
+          "placeholder": "my-bucket",
+          "learnUrl": "https://cloud.google.com/storage/docs/creating-buckets"
         },
         {
           "name": "FILE_PATH",
           "viewName": "File Path",
-          "type": "string"
+          "type": "string",
+          "description": "File Location/Path",
+          "placeholder": "d:/myfile",
+          "learnUrl": "https://cloud.google.com/storage/docs/uploading-objects"
         }
       ]
     },
@@ -135,31 +168,40 @@
       "name": "DELETE_FILE",
       "viewName": "Delete File",
       "description": "To upload file.",
-      "learnUrl": "https://cloud.google.com/storage/docs/deleting-objects",
+      "learnUrl": "https://cloud.google.com/storage/docs/samples/storage-delete-file",
       "params": [
         {
           "name": "PROJECT",
           "viewName": "Project ID",
-          "type": "string"
+          "type": "string",
+          "description": "The ID of the default project to send requests to.",
+          "placeholder": "my-project",
+          "learnUrl": "https://cloud.google.com/docs/authentication/production"
         },
         {
           "name": "CREDENTIALS",
           "viewName": "Credentials",
-          "type": "vault"
+          "type": "vault",
+          "description": "Default service account credentials",
+          "learnUrl": "https://cloud.google.com/docs/authentication/production"
         },
         {
           "name": "NAME",
           "viewName": "Bucket Name",
           "type": "autocomplete",
           "autocompleteType": "function",
-          "functionName": "listBuckets"
+          "functionName": "listBuckets",
+          "description": "The name of the bucket",
+          "placeholder": "my-bucket",
+          "learnUrl": "https://cloud.google.com/storage/docs/creating-buckets"
         },
         {
           "name": "FILE_NAME",
           "viewName": "File Name",
           "type": "autocomplete",
           "autocompleteType": "function",
-          "functionName": "listFiles"
+          "functionName": "listFiles",
+          "learnUrl": "https://cloud.google.com/storage/docs/samples/storage-delete-file"
         }
       ]
     },
@@ -172,34 +214,51 @@
         {
           "name": "PROJECT",
           "viewName": "Project ID",
-          "type": "string"
+          "type": "string",
+          "description": "The ID of the default project to send requests to.",
+          "placeholder": "my-project",
+          "learnUrl": "https://cloud.google.com/docs/authentication/production"
         },
         {
           "name": "CREDENTIALS",
           "viewName": "Credentials",
-          "type": "vault"
+          "type": "vault",
+          "description": "Default service account credentials",
+          "learnUrl": "https://cloud.google.com/docs/authentication/production"
         },
         {
           "name": "NAME",
           "viewName": "Bucket Name",
           "type": "autocomplete",
           "autocompleteType": "function",
-          "functionName": "listBuckets"
+          "functionName": "listBuckets",
+          "description": "The name of the bucket",
+          "placeholder": "my-bucket",
+          "learnUrl": "https://cloud.google.com/storage/docs/creating-buckets"
         },
         {
           "name": "FOLDER_NAME",
           "viewName": "Folder Name",
-          "type": "string"
+          "type": "string",
+          "description": "Folder name where the file will be stored into the given bucket",
+          "placeholder": "my-Folder",
+          "learnUrl": "https://cloud.google.com/storage/docs/uploading-objects"
         },
         {
           "name": "File_NAME",
           "viewName": "File Name",
-          "type": "string"
+          "type": "string",
+          "description": "File name with extension that is to be uploaded",
+          "placeholder": "my-File.txt",
+          "learnUrl": "https://cloud.google.com/storage/docs/uploading-objects"
         },
         {
           "name": "FILE_PATH",
           "viewName": "File Path",
-          "type": "string"
+          "type": "string",
+          "description": "File Location/Path",
+          "placeholder": "d:/myfile.txt",
+          "learnUrl": "https://cloud.google.com/storage/docs/uploading-objects"
         }
 
       ]
