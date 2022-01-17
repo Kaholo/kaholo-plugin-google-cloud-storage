@@ -8,7 +8,7 @@ Create a new bucket on the cloud.
 1. Project ID (string) **Required** - The ID of the project to create the bucket in.
 2. Name (string) **Required** - The name of the bucket to create.
 3. Credentials (Vault) **Required** - Google cloud credentials to authenticate with in this specific call to the method.
-4. Storage Class (string) **Required** - The type of storage class of the bucket to create.
+4. Storage Class (options) **Required** - The type of storage class of the bucket to create.
 5. Location (string) **Optional** - The google cloud location to create the bucket in. You can see list of available locations [here](https://cloud.google.com/storage/docs/locations).
 
 ## Method: Delete Bucket

@@ -4,7 +4,7 @@
   "exposeRoute": false,
   "execProgram": "node",
   "main": "app.js",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "imgUrl": "logo.png",
   "category": ["CLOUD", "STORAGE"],
   "methods": [
@@ -30,7 +30,25 @@
         {
           "name": "CLASS",
           "viewName": "Storage Class",
-          "type": "string"
+          "type": "options",
+          "options": [
+            {
+              "id": "STANDARD",
+              "name": "Standard"
+            },
+            {
+              "id": "NEARLINE",
+              "name": "Nearline"
+            },
+            {
+              "id": "COLDLINE",
+              "name": "Coldline"
+            },
+            {
+              "id": "ARCHIVE",
+              "name": "Archive"
+            }
+          ]
         },
         {
           "name": "LOCATION",
