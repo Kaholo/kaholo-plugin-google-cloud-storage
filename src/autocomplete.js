@@ -52,8 +52,8 @@ function listAuto(listFuncName, fields) {
     try {
       const settings = mapAutoParams(pluginSettings);
       const params = mapAutoParams(triggerParameters);
-      const client = GoogleCloudStorage.from(...settings);
-      const result = await client[listFuncName]({query: parsers.string(query), ...params});
+      const client = GoogleCloudStorage.from({ projectId : settings.PROJECT,credentials: parsers.json(settings.CREDENTIALS)});
+      const result = await client[listFuncName]({query: parsers.string(query), bucketname: params.NAME});
       const items = handleResult(result, query, ...fields);
       return items;
     }
@@ -66,4 +66,5 @@ function listAuto(listFuncName, fields) {
 
 module.exports = {
   listBuckets: listAuto("listBuckets", ["name", "name"]),
+  listFiles : listAuto("listFiles", ['name', 'name'])
 }

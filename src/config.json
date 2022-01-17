@@ -45,12 +45,29 @@
           "name": "NAME",
           "viewName": "Bucket Name",
           "type": "string"
-        },
-        
+        },  
         {
           "name": "CLASS",
           "viewName": "Storage Class",
-          "type": "string"
+          "type": "options",
+          "options": [
+            {
+              "id": "STANDARD",
+              "name": "Standard"
+            },
+            {
+              "id": "NEARLINE",
+              "name": "Nearline"
+            },
+            {
+              "id": "COLDLINE",
+              "name": "Coldline"
+            },
+            {
+              "id": "ARCHIVE",
+              "name": "Archive"
+            }
+          ]
         },
         {
           "name": "LOCATION",
@@ -71,15 +88,16 @@
           "type": "string"
         },
         {
-          "name": "NAME",
-          "viewName": "Bucket Name",
-          "type": "autocomplete",
-          "functionName": "listBuckets"
-        },
-        {
           "name": "CREDENTIALS",
           "viewName": "Credentials",
           "type": "vault"
+        },
+        {
+          "name": "NAME",
+          "viewName": "Bucket Name",
+          "type": "autocomplete",
+          "autocompleteType": "function",
+          "functionName": "listBuckets"
         }
       ]
     },
@@ -95,14 +113,16 @@
           "type": "string"
         },
         {
-          "name": "NAME",
-          "viewName": "Bucket Name",
-          "type": "string"
-        },
-        {
           "name": "CREDENTIALS",
           "viewName": "Credentials",
           "type": "vault"
+        },
+        {
+          "name": "NAME",
+          "viewName": "Bucket Name",
+          "type": "autocomplete",
+          "autocompleteType": "function",
+          "functionName": "listBuckets"
         },
         {
           "name": "FILE_PATH",
@@ -112,8 +132,40 @@
       ]
     },
     {
+      "name": "DELETE_FILE",
+      "viewName": "Delete File",
+      "description": "To upload file.",
+      "learnUrl": "https://cloud.google.com/storage/docs/deleting-objects",
+      "params": [
+        {
+          "name": "PROJECT",
+          "viewName": "Project ID",
+          "type": "string"
+        },
+        {
+          "name": "CREDENTIALS",
+          "viewName": "Credentials",
+          "type": "vault"
+        },
+        {
+          "name": "NAME",
+          "viewName": "Bucket Name",
+          "type": "autocomplete",
+          "autocompleteType": "function",
+          "functionName": "listBuckets"
+        },
+        {
+          "name": "FILE_NAME",
+          "viewName": "File Name",
+          "type": "autocomplete",
+          "autocompleteType": "function",
+          "functionName": "listFiles"
+        }
+      ]
+    },
+    {
       "name": "CREATE_FOLDER",
-      "viewName": "Create Folder",
+      "viewName": "Upload File into Folder",
       "description": "To Create file.",
       "learnUrl": "https://cloud.google.com/storage/docs/uploading-objects",
       "params": [
@@ -123,20 +175,33 @@
           "type": "string"
         },
         {
-          "name": "NAME",
-          "viewName": "Bucket Name",
-          "type": "string"
-        },
-        {
           "name": "CREDENTIALS",
           "viewName": "Credentials",
           "type": "vault"
         },
         {
+          "name": "NAME",
+          "viewName": "Bucket Name",
+          "type": "autocomplete",
+          "autocompleteType": "function",
+          "functionName": "listBuckets"
+        },
+        {
           "name": "FOLDER_NAME",
           "viewName": "Folder Name",
           "type": "string"
+        },
+        {
+          "name": "File_NAME",
+          "viewName": "File Name",
+          "type": "string"
+        },
+        {
+          "name": "FILE_PATH",
+          "viewName": "File Path",
+          "type": "string"
         }
+
       ]
     }
   ]

@@ -32,15 +32,28 @@ module.exports = class GoogleCloudStorage{
         return await storage.bucket(bucketname).upload(filePath)
     }
 
-    async createFolder({bucketname,folderName}){
+    async deleteFile({bucketname, fileName}){
         const storage = this.getStorageAccess(this.authCreds)
-        return await storage.bucket(bucketname).upload("", {destination: `${folderName}/`})
+        return await storage.bucket(bucketname).file(fileName).delete()
+    }
+
+    async createFolder({bucketname,folderName, filePath, fileName}){
+        const storage = this.getStorageAccess(this.authCreds)
+        return await storage.bucket(bucketname).upload(filePath, {
+            destination: `${folderName}/${fileName}`
+        })
     }
 
     async listBuckets({}){
         const storage = this.getStorageAccess(this.authCreds)
         const [buckets]= await storage.getBuckets()
         return buckets
+    }
+
+    async listFiles({bucketname}){
+        const storage = this.getStorageAccess(this.authCreds)
+        const [files] = await storage.bucket(bucketname).getFiles();
+        return files
     }
 
 }

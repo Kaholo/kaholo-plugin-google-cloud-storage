@@ -28,7 +28,7 @@ const DELETE_BUCKET = async (action, settings)=>{
         credentials: credentials
     })
 
-    const bucketname = parsers.string(action.params.NAME)
+    const bucketname = parsers.autocomplete(action.params.NAME)
     return storageService.deleteBucket({ bucketname: bucketname })
 }
 
@@ -41,9 +41,25 @@ const UPLOAD_FILE = async(action, settings)=>{
         credentials: credentials
     })
 
-    const bucketname = parsers.string(action.params.NAME)
+    const bucketname = parsers.autocomplete(action.params.NAME)
     const filePath = parsers.string(action.params.FILE_PATH)
     return storageService.uploadFile({ bucketname: bucketname, filePath: filePath })
+}
+
+const DELETE_FILE = async(action, settings)=>{
+    const projectId = parsers.string(action.params.PROJECT) || parsers.string(settings.PROJECT)
+    const credentials = parsers.json(action.params.CREDENTIALS) || parsers.json(settings.CREDENTIALS)
+
+    const storageService = GoogleCloudStorage.from({
+        projectId : projectId,
+        credentials: credentials
+    })
+    const bucketname = parsers.autocomplete(action.params.NAME)
+    const fileName = parsers.autocomplete(action.params.File_NAME)
+    return storageService.deleteFile({
+        bucketname: bucketname,
+        fileName: fileName
+    })
 }
 
 const CREATE_FOLDER = async (action, settings)=>{
@@ -55,9 +71,17 @@ const CREATE_FOLDER = async (action, settings)=>{
         credentials: credentials
     })
 
-    const bucketname = parsers.string(action.params.NAME)
+    const bucketname = parsers.autocomplete(action.params.NAME)
     const folderName = parsers.string(action.params.FOLDER_NAME)
-    return storageService.createFolder({bucketname: bucketname, folderName: folderName})
+    const filePath = parsers.string(action.params.FILE_PATH)
+    const fileName = parsers.string(action.params.File_NAME)
+
+    return storageService.createFolder({
+        bucketname: bucketname,
+        folderName: folderName,
+        filePath: filePath,
+        fileName: fileName
+    })
 }
 
 
@@ -65,5 +89,7 @@ module.exports = {
     CREATE_BUCKET,
     DELETE_BUCKET,
     UPLOAD_FILE,
-    CREATE_FOLDER
+    DELETE_FILE,
+    CREATE_FOLDER,
+    ...require('./autocomplete')
 }
