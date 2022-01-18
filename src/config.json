@@ -1,5 +1,6 @@
 {
   "name": "GoogleCloudStorage",
+  "viewName": "Google Cloud Storage",
   "type": "executer",
   "exposeRoute": false,
   "execProgram": "node",
@@ -7,6 +8,7 @@
   "version": "1.1.2",
   "imgUrl": "logo.png",
   "category": ["CLOUD", "STORAGE"],
+  "keywords": ["gcp", "cloud", "storage", "bucket"],
   "settings": [
     {
       "name": "CREDENTIALS",
@@ -28,7 +30,7 @@
     {
       "name": "CREATE_BUCKET",
       "viewName": "Create New Bucket",
-      "description": "To create storage bucket.",
+      "description": "Creates a new storage bucket.",
       "learnUrl": "https://cloud.google.com/storage/docs/creating-buckets",
       "params": [
         {
@@ -50,7 +52,6 @@
           "name": "NAME",
           "viewName": "Bucket Name",
           "type": "string",
-          "description": "The name of the bucket",
           "placeholder": "my-bucket",
           "learnUrl": "https://cloud.google.com/storage/docs/creating-buckets"
         },  
@@ -58,9 +59,9 @@
           "name": "CLASS",
           "viewName": "Storage Class",
           "type": "options",
-          "description": "The name of the bucket",
-          "placeholder": "my-bucket",
-          "learnUrl": "https://cloud.google.com/storage/docs/creating-buckets",
+          "description": "The storage class to be applied.",
+          "placeholder": "Standard | Nearline | Coldline | Archive",
+          "learnUrl": "https://cloud.google.com/storage/docs/storage-classes",
           "options": [
             {
               "id": "STANDARD",
@@ -84,7 +85,7 @@
           "name": "LOCATION",
           "viewName": "Location",
           "type": "string",
-          "description": "Cloud Loaction",
+          "description": "Cloud Location",
           "placeholder": "us-west2",
           "learnUrl": "https://cloud.google.com/about/locations"
         }
@@ -93,7 +94,7 @@
     {
       "name": "DELETE_BUCKET",
       "viewName": "Delete Bucket",
-      "description": "To delete storage bucket.",
+      "description": "Deletes a specified storage bucket.",
       "learnUrl": "https://cloud.google.com/storage/docs/deleting-buckets",
       "params": [
         {
@@ -117,7 +118,6 @@
           "type": "autocomplete",
           "autocompleteType": "function",
           "functionName": "listBuckets",
-          "description": "The name of the bucket",
           "placeholder": "my-bucket",
           "learnUrl": "https://cloud.google.com/storage/docs/deleting-buckets"
         }
@@ -126,7 +126,7 @@
     {
       "name": "UPLOAD_FILE",
       "viewName": "Upload File",
-      "description": "To upload file.",
+      "description": "Yploads a file into the specified bucket.",
       "learnUrl": "https://cloud.google.com/storage/docs/uploading-objects",
       "params": [
         {
@@ -150,7 +150,6 @@
           "type": "autocomplete",
           "autocompleteType": "function",
           "functionName": "listBuckets",
-          "description": "The name of the bucket",
           "placeholder": "my-bucket",
           "learnUrl": "https://cloud.google.com/storage/docs/creating-buckets"
         },
@@ -167,7 +166,7 @@
     {
       "name": "DELETE_FILE",
       "viewName": "Delete File",
-      "description": "To upload file.",
+      "description": "Delets a file from the specified bucket.",
       "learnUrl": "https://cloud.google.com/storage/docs/samples/storage-delete-file",
       "params": [
         {
@@ -191,7 +190,6 @@
           "type": "autocomplete",
           "autocompleteType": "function",
           "functionName": "listBuckets",
-          "description": "The name of the bucket",
           "placeholder": "my-bucket",
           "learnUrl": "https://cloud.google.com/storage/docs/creating-buckets"
         },
@@ -208,7 +206,7 @@
     {
       "name": "CREATE_FOLDER",
       "viewName": "Upload File into Folder",
-      "description": "To Create file.",
+      "description": "Creates a folder into the bucket where the file will be uploaded.",
       "learnUrl": "https://cloud.google.com/storage/docs/uploading-objects",
       "params": [
         {
@@ -232,7 +230,6 @@
           "type": "autocomplete",
           "autocompleteType": "function",
           "functionName": "listBuckets",
-          "description": "The name of the bucket",
           "placeholder": "my-bucket",
           "learnUrl": "https://cloud.google.com/storage/docs/creating-buckets"
         },
@@ -240,7 +237,7 @@
           "name": "FOLDER_NAME",
           "viewName": "Folder Name",
           "type": "string",
-          "description": "Folder name where the file will be stored into the given bucket",
+          "description": "Folder name where the file will be stored into the given bucket.",
           "placeholder": "my-Folder",
           "learnUrl": "https://cloud.google.com/storage/docs/uploading-objects"
         },
@@ -248,7 +245,7 @@
           "name": "File_NAME",
           "viewName": "File Name",
           "type": "string",
-          "description": "File name with extension that is to be uploaded",
+          "description": "File name with extension that is to be uploaded.",
           "placeholder": "my-File.txt",
           "learnUrl": "https://cloud.google.com/storage/docs/uploading-objects"
         },
