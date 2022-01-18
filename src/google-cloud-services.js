@@ -27,7 +27,7 @@ module.exports = class GoogleCloudStorage{
         return await storage.bucket(bucketname).delete()
     }
 
-    async uploadFile({filePath}){
+    async uploadFile({bucketname, filePath}){
         const storage = this.getStorageAccess(this.authCreds)
         return await storage.bucket(bucketname).upload(filePath)
     }

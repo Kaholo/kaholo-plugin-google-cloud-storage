@@ -55,7 +55,7 @@ const DELETE_FILE = async(action, settings)=>{
         credentials: credentials
     })
     const bucketname = parsers.autocomplete(action.params.NAME)
-    const fileName = parsers.autocomplete(action.params.File_NAME)
+    const fileName = parsers.autocomplete(action.params.FILE_NAME)
     return storageService.deleteFile({
         bucketname: bucketname,
         fileName: fileName
