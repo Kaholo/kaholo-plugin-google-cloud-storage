@@ -126,7 +126,7 @@
     {
       "name": "UPLOAD_FILE",
       "viewName": "Upload File",
-      "description": "Yploads a file into the specified bucket.",
+      "description": "Uploads a file into the specified bucket.",
       "learnUrl": "https://cloud.google.com/storage/docs/uploading-objects",
       "params": [
         {
