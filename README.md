@@ -1,4 +1,4 @@
-# kaholo-plugin-google-cloud-services
+# kaholo-plugin-google-cloud-storage
 Google Cloud Storage plugin for Kaholo.
 
 # Authentication
