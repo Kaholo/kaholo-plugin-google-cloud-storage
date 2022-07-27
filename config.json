@@ -264,6 +264,28 @@
           "learnUrl": "https://cloud.google.com/storage/docs/uploading-objects"
         }
       ]
+    },
+    {
+      "name": "listBuckets",
+      "viewName": "List Buckets",
+      "params": [
+        {
+          "name": "PROJECT",
+          "viewName": "Project ID",
+          "type": "string",
+          "description": "The ID of the default project to send requests to.",
+          "placeholder": "my-project",
+          "learnUrl": "https://cloud.google.com/docs/authentication/production"
+        },
+        {
+          "name": "CREDENTIALS",
+          "viewName": "Credentials",
+          "type": "vault",
+          "parserType": "object",
+          "description": "Default service account credentials",
+          "learnUrl": "https://cloud.google.com/docs/authentication/production"
+        }
+      ]
     }
   ]
 }

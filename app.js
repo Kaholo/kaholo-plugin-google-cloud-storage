@@ -87,10 +87,22 @@ function createFolder(params) {
     });
 }
 
+function listBuckets(params) {
+  const {
+    PROJECT: projectId,
+    CREDENTIALS: credentials,
+  } = params;
+
+  const storageClient = new GoogleCloudStorageClient({ projectId, credentials });
+
+  return storageClient.getBuckets();
+}
+
 module.exports = kaholoPluginLibrary.bootstrap({
   CREATE_BUCKET: createBucket,
   DELETE_BUCKET: deleteBucket,
   UPLOAD_FILE: uploadFile,
   DELETE_FILE: deleteFile,
   CREATE_FOLDER: createFolder,
+  listBuckets,
 }, autocomplete);
