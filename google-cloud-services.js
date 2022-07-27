@@ -1,59 +1,59 @@
-const Storage = require('@google-cloud/storage');
+const Storage = require("@google-cloud/storage");
 
+module.exports = class GoogleCloudStorage {
+  constructor(projectId, credentials) {
+    this.authCreds = {
+      projectId,
+      credentials,
+    };
+  }
 
-module.exports = class GoogleCloudStorage{
-    constructor(projectId, credentials){
-        this.authCreds = {
-            projectId : projectId,
-            credentials: credentials
-        }
-    }
+  static from({ projectId, credentials }) {
+    return new GoogleCloudStorage(projectId, credentials);
+  }
 
-    static from({projectId, credentials}){
-        return new GoogleCloudStorage(projectId, credentials)
-    }
+  static getStorageAccess(creds) {
+    return new Storage(creds);
+  }
 
-    getStorageAccess(creds) {
-        return new Storage(creds)
-    }
+  createBucket({ bucketname, metadata }) {
+    const storage = GoogleCloudStorage.getStorageAccess(this.authCreds);
+    return storage.createBucket(bucketname, metadata);
+  }
 
-    async createBucket({bucketname, metadata}){
-        const storage = this.getStorageAccess(this.authCreds)
-        return await storage.createBucket(bucketname, metadata)
-    }
+  deleteBucket({ bucketname }) {
+    const storage = GoogleCloudStorage.getStorageAccess(this.authCreds);
+    return storage.bucket(bucketname).delete();
+  }
 
-    async deleteBucket({bucketname}){
-        const storage = this.getStorageAccess(this.authCreds)
-        return await storage.bucket(bucketname).delete()
-    }
+  uploadFile({ bucketname, filePath }) {
+    const storage = GoogleCloudStorage.getStorageAccess(this.authCreds);
+    return storage.bucket(bucketname).upload(filePath);
+  }
 
-    async uploadFile({bucketname, filePath}){
-        const storage = this.getStorageAccess(this.authCreds)
-        return await storage.bucket(bucketname).upload(filePath)
-    }
+  deleteFile({ bucketname, fileName }) {
+    const storage = GoogleCloudStorage.getStorageAccess(this.authCreds);
+    return storage.bucket(bucketname).file(fileName).delete();
+  }
 
-    async deleteFile({bucketname, fileName}){
-        const storage = this.getStorageAccess(this.authCreds)
-        return await storage.bucket(bucketname).file(fileName).delete()
-    }
+  createFolder({
+    bucketname, folderName, filePath, fileName,
+  }) {
+    const storage = GoogleCloudStorage.getStorageAccess(this.authCreds);
+    return storage.bucket(bucketname).upload(filePath, {
+      destination: `${folderName}/${fileName}`,
+    });
+  }
 
-    async createFolder({bucketname,folderName, filePath, fileName}){
-        const storage = this.getStorageAccess(this.authCreds)
-        return await storage.bucket(bucketname).upload(filePath, {
-            destination: `${folderName}/${fileName}`
-        })
-    }
+  async listBuckets() {
+    const storage = GoogleCloudStorage.getStorageAccess(this.authCreds);
+    const [buckets] = await storage.getBuckets();
+    return buckets;
+  }
 
-    async listBuckets({}){
-        const storage = this.getStorageAccess(this.authCreds)
-        const [buckets]= await storage.getBuckets()
-        return buckets
-    }
-
-    async listFiles({bucketname}){
-        const storage = this.getStorageAccess(this.authCreds)
-        const [files] = await storage.bucket(bucketname).getFiles();
-        return files
-    }
-
-}
+  async listFiles({ bucketname }) {
+    const storage = GoogleCloudStorage.getStorageAccess(this.authCreds);
+    const [files] = await storage.bucket(bucketname).getFiles();
+    return files;
+  }
+};
