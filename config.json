@@ -14,6 +14,7 @@
       "name": "CREDENTIALS",
       "viewName": "Service Account Credentials",
       "type": "vault",
+      "parserType": "object",
       "description": "Default service account credentials",
       "learnUrl": "https://cloud.google.com/docs/authentication/production"
     },
@@ -45,6 +46,7 @@
           "name": "CREDENTIALS",
           "viewName": "Credentials",
           "type": "vault",
+          "parserType": "object",
           "description": "Default service account credentials",
           "learnUrl": "https://cloud.google.com/docs/authentication/production"
         },
@@ -109,6 +111,7 @@
           "name": "CREDENTIALS",
           "viewName": "Credentials",
           "type": "vault",
+          "parserType": "object",
           "description": "Default service account credentials",
           "learnUrl": "https://cloud.google.com/docs/authentication/production"
         },
@@ -141,6 +144,7 @@
           "name": "CREDENTIALS",
           "viewName": "Credentials",
           "type": "vault",
+          "parserType": "object",
           "description": "Default service account credentials",
           "learnUrl": "https://cloud.google.com/docs/authentication/production"
         },
@@ -181,6 +185,7 @@
           "name": "CREDENTIALS",
           "viewName": "Credentials",
           "type": "vault",
+          "parserType": "object",
           "description": "Default service account credentials",
           "learnUrl": "https://cloud.google.com/docs/authentication/production"
         },
@@ -221,6 +226,7 @@
           "name": "CREDENTIALS",
           "viewName": "Credentials",
           "type": "vault",
+          "parserType": "object",
           "description": "Default service account credentials",
           "learnUrl": "https://cloud.google.com/docs/authentication/production"
         },
@@ -257,7 +263,6 @@
           "placeholder": "d:/myfile.txt",
           "learnUrl": "https://cloud.google.com/storage/docs/uploading-objects"
         }
-
       ]
     }
   ]
