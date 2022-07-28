@@ -1,7 +1,7 @@
 const GoogleCloudStorageClient = require("@google-cloud/storage");
 const _ = require("lodash");
 
-function createAutocompleteFunction(fetchItems, [valuePath, idPath = ""]) {
+function createAutocompleteFunction(fetchItems, { valuePath, idPath = "" }) {
   return async (query, params) => {
     const {
       PROJECT: projectId,
@@ -17,10 +17,14 @@ function createAutocompleteFunction(fetchItems, [valuePath, idPath = ""]) {
     }));
 
     const lowerCaseQuery = query.toLowerCase();
+
+    if (!query) {
+      return mappedItems;
+    }
+
     const filteredItems = mappedItems.filter((item) => (
-      !query
-      || item.value.toLowerCase().includes(lowerCaseQuery)
-      || item.query.toLowerCase().includes(lowerCaseQuery)
+      item.value.toLowerCase().includes(lowerCaseQuery)
+      || item.id.toLowerCase().includes(lowerCaseQuery)
     ));
 
     return filteredItems;
@@ -34,7 +38,7 @@ module.exports = {
         .getBuckets()
         .then(([buckets]) => buckets)
     ),
-    ["name"],
+    { valuePath: "name" },
   ),
   listFiles: createAutocompleteFunction(
     (storageClient, params) => (
@@ -43,6 +47,6 @@ module.exports = {
         .getFiles()
         .then(([files]) => files)
     ),
-    ["name"],
+    { valuePath: "name" },
   ),
 };
