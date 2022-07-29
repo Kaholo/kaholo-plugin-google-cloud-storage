@@ -1,70 +1,52 @@
-const GoogleCloudStorage = require('./google-cloud-services')
-const parsers = require('./parsers')
+const GoogleCloudStorageClient = require("@google-cloud/storage");
+const _ = require("lodash");
 
-const MAX_RESULTS = 25;
+function createAutocompleteFunction(fetchItems, { valuePath, idPath = "" }) {
+  return async (query, params) => {
+    const {
+      PROJECT: projectId,
+      CREDENTIALS: credentials,
+    } = params;
 
-// auto complete helper methods
+    const storageClient = new GoogleCloudStorageClient({ projectId, credentials });
+    const items = await fetchItems(storageClient, params);
 
-function mapAutoParams(autoParams){
-  const params = {};
-  autoParams.forEach(param => {
-    params[param.name] = parsers.autocomplete(param.value);
-  });
-  return params;
-}
+    const mappedItems = items.map((item) => ({
+      value: _.get(item, valuePath),
+      id: idPath ? _.get(item, idPath) : _.get(item, valuePath),
+    }));
 
-/***
- * @returns {[{id, value}]} filtered result items
- ***/
-function handleResult(result, query, keyField, valField){
-  if (!result || result.length == 0) return [];
-  if (!keyField) {
-    keyField = "id";
-    valField = "name";
-  }
-  const items = result.map(item => getAutoResult(item[keyField], item[valField]));
-  return filterItems(items, query);
-}
+    const lowerCaseQuery = query.toLowerCase();
 
-/***
- * @returns {{id, value}} formatted autocomplete item
- ***/
-function getAutoResult(id, value) {
-  return {
-    id: id || value,
-    value: value || id
+    if (!query) {
+      return mappedItems;
+    }
+
+    const filteredItems = mappedItems.filter((item) => (
+      item.value.toLowerCase().includes(lowerCaseQuery)
+      || item.id.toLowerCase().includes(lowerCaseQuery)
+    ));
+
+    return filteredItems;
   };
 }
 
-function filterItems(items, query){
-  if (query){
-    const qWords = query.split(/[. ]/g).map(word => word.toLowerCase()); // split by '.' or ' ' and make lower case
-    items = items.filter(item => qWords.every(word => item.value.toLowerCase().includes(word)));
-    items = items.sort((word1, word2) => word1.value.toLowerCase().indexOf(qWords[0]) - word2.value.toLowerCase().indexOf(qWords[0]));
-  }
-  return items.splice(0, MAX_RESULTS);
-  // const itemList = items.filter(item=> item.toLowerCase().includes(query.toLowerCase()))
-  // return itemList
-}
-
-function listAuto(listFuncName, fields) {
-  return async (query, pluginSettings, triggerParameters) => {
-    try {
-      const settings = mapAutoParams(pluginSettings);
-      const params = mapAutoParams(triggerParameters);
-      const client = GoogleCloudStorage.from({ projectId : params.PROJECT || settings.PROJECT,credentials: parsers.json(params.CREDENTIALS || settings.CREDENTIALS)});
-      const result = await client[listFuncName]({query: parsers.string(query), bucketname: params.NAME});
-      const items = handleResult(result, query, ...fields);
-      return items;
-    }
-    catch (err) {
-      if (typeof err === 'string') throw err;
-      throw err.message || JSON.stringify(err);
-    }
-  }
-}
-
 module.exports = {
-  listBuckets: listAuto("listBuckets", ["name", "name"]),
-  listFiles : listAuto("listFiles", ['name', 'name'])
-}
+  listBuckets: createAutocompleteFunction(
+    (storageClient) => (
+      storageClient
+        .getBuckets()
+        .then(([buckets]) => buckets)
+    ),
+    { valuePath: "name" },
+  ),
+  listFiles: createAutocompleteFunction(
+    (storageClient, params) => (
+      storageClient
+        .bucket(params.NAME)
+        .getFiles()
+        .then(([files]) => files)
+    ),
+    { valuePath: "name" },
+  ),
+};
