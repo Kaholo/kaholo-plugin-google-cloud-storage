@@ -5,11 +5,11 @@ const autocomplete = require("./autocomplete");
 
 async function createBucket(params) {
   const {
-    PROJECT: projectId,
-    CREDENTIALS: credentials,
-    NAME: bucketName,
-    CLASS: classInfo,
-    LOCATION: location,
+    projectId,
+    credentials,
+    bucketName,
+    classInfo,
+    location,
   } = params;
 
   const storageClient = new GoogleCloudStorageClient({ projectId, credentials });
@@ -27,9 +27,9 @@ async function createBucket(params) {
 
 async function deleteBucket(params) {
   const {
-    PROJECT: projectId,
-    CREDENTIALS: credentials,
-    NAME: bucketName,
+    projectId,
+    credentials,
+    bucketName,
   } = params;
 
   const storageClient = new GoogleCloudStorageClient({ projectId, credentials });
@@ -39,10 +39,10 @@ async function deleteBucket(params) {
 
 function uploadFile(params) {
   const {
-    PROJECT: projectId,
-    CREDENTIALS: credentials,
-    NAME: bucketName,
-    FILE_PATH: filePath,
+    projectId,
+    credentials,
+    bucketName,
+    filePath,
   } = params;
 
   const storageClient = new GoogleCloudStorageClient({ projectId, credentials });
@@ -54,10 +54,10 @@ function uploadFile(params) {
 
 function deleteFile(params) {
   const {
-    PROJECT: projectId,
-    CREDENTIALS: credentials,
-    NAME: bucketName,
-    FILE_NAME: fileName,
+    projectId,
+    credentials,
+    bucketName,
+    fileName,
   } = params;
 
   const storageClient = new GoogleCloudStorageClient({ projectId, credentials });
@@ -70,12 +70,12 @@ function deleteFile(params) {
 
 function createFolder(params) {
   const {
-    PROJECT: projectId,
-    CREDENTIALS: credentials,
-    NAME: bucketName,
-    FOLDER_NAME: folderName,
-    FILE_PATH: filePath,
-    FILE_NAME: fileName,
+    projectId,
+    credentials,
+    bucketName,
+    folderName,
+    filePath,
+    fileName,
   } = params;
 
   const storageClient = new GoogleCloudStorageClient({ projectId, credentials });
@@ -99,10 +99,10 @@ function listBuckets(params) {
 }
 
 module.exports = kaholoPluginLibrary.bootstrap({
-  CREATE_BUCKET: createBucket,
-  DELETE_BUCKET: deleteBucket,
-  UPLOAD_FILE: uploadFile,
-  DELETE_FILE: deleteFile,
-  CREATE_FOLDER: createFolder,
+  createBucket,
+  deleteBucket,
+  uploadFile,
+  deleteFile,
+  createFolder,
   listBuckets,
 }, autocomplete);
