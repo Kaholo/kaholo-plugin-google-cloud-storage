@@ -9,15 +9,20 @@
   "imgUrl": "logo.png",
   "category": ["CLOUD", "STORAGE"],
   "keywords": ["gcp", "cloud", "storage", "bucket"],
+  "auth": {
+    "authId": "gcpAccount",
+    "params": [
+      {
+        "name": "CREDENTIALS",
+        "viewName": "Service Account Credentials",
+        "type": "vault",
+        "parserType": "object",
+        "description": "Default service account credentials",
+        "learnUrl": "https://cloud.google.com/docs/authentication/production"
+      }
+    ]
+  },
   "settings": [
-    {
-      "name": "CREDENTIALS",
-      "viewName": "Service Account Credentials",
-      "type": "vault",
-      "parserType": "object",
-      "description": "Default service account credentials",
-      "learnUrl": "https://cloud.google.com/docs/authentication/production"
-    },
     {
       "name": "PROJECT",
       "viewName": "Default Project ID",
@@ -40,14 +45,6 @@
           "type": "string",
           "description": "The ID of the default project to send requests to.",
           "placeholder": "my-project",
-          "learnUrl": "https://cloud.google.com/docs/authentication/production"
-        },
-        {
-          "name": "CREDENTIALS",
-          "viewName": "Credentials",
-          "type": "vault",
-          "parserType": "object",
-          "description": "Default service account credentials",
           "learnUrl": "https://cloud.google.com/docs/authentication/production"
         },
         {
@@ -108,14 +105,6 @@
           "learnUrl": "https://cloud.google.com/docs/authentication/production"
         },
         {
-          "name": "CREDENTIALS",
-          "viewName": "Credentials",
-          "type": "vault",
-          "parserType": "object",
-          "description": "Default service account credentials",
-          "learnUrl": "https://cloud.google.com/docs/authentication/production"
-        },
-        {
           "name": "NAME",
           "viewName": "Bucket Name",
           "type": "autocomplete",
@@ -138,14 +127,6 @@
           "type": "string",
           "description": "The ID of the default project to send requests to.",
           "placeholder": "my-project",
-          "learnUrl": "https://cloud.google.com/docs/authentication/production"
-        },
-        {
-          "name": "CREDENTIALS",
-          "viewName": "Credentials",
-          "type": "vault",
-          "parserType": "object",
-          "description": "Default service account credentials",
           "learnUrl": "https://cloud.google.com/docs/authentication/production"
         },
         {
@@ -182,14 +163,6 @@
           "learnUrl": "https://cloud.google.com/docs/authentication/production"
         },
         {
-          "name": "CREDENTIALS",
-          "viewName": "Credentials",
-          "type": "vault",
-          "parserType": "object",
-          "description": "Default service account credentials",
-          "learnUrl": "https://cloud.google.com/docs/authentication/production"
-        },
-        {
           "name": "NAME",
           "viewName": "Bucket Name",
           "type": "autocomplete",
@@ -220,14 +193,6 @@
           "type": "string",
           "description": "The ID of the default project to send requests to.",
           "placeholder": "my-project",
-          "learnUrl": "https://cloud.google.com/docs/authentication/production"
-        },
-        {
-          "name": "CREDENTIALS",
-          "viewName": "Credentials",
-          "type": "vault",
-          "parserType": "object",
-          "description": "Default service account credentials",
           "learnUrl": "https://cloud.google.com/docs/authentication/production"
         },
         {
@@ -275,14 +240,6 @@
           "type": "string",
           "description": "The ID of the default project to send requests to.",
           "placeholder": "my-project",
-          "learnUrl": "https://cloud.google.com/docs/authentication/production"
-        },
-        {
-          "name": "CREDENTIALS",
-          "viewName": "Credentials",
-          "type": "vault",
-          "parserType": "object",
-          "description": "Default service account credentials",
           "learnUrl": "https://cloud.google.com/docs/authentication/production"
         }
       ]
