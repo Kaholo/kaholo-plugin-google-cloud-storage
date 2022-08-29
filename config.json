@@ -116,9 +116,9 @@
       ]
     },
     {
-      "name": "uploadFile",
-      "viewName": "Upload File",
-      "description": "Uploads a file into the specified bucket.",
+      "name": "upload",
+      "viewName": "Upload",
+      "description": "Uploads a file or a folder into the specified bucket.",
       "learnUrl": "https://cloud.google.com/storage/docs/uploading-objects",
       "params": [
         {
@@ -133,17 +133,27 @@
           "name": "bucketName",
           "viewName": "Bucket Name",
           "type": "autocomplete",
+          "required": true,
           "autocompleteType": "function",
           "functionName": "listBucketsAuto",
           "placeholder": "my-bucket",
           "learnUrl": "https://cloud.google.com/storage/docs/creating-buckets"
         },
         {
-          "name": "filePath",
-          "viewName": "File Path",
+          "name": "sourcePath",
+          "viewName": "Source Path",
           "type": "string",
-          "description": "File Location/Path",
+          "required": true,
+          "description": "Path to the source file/folder",
           "placeholder": "d:/myfile",
+          "learnUrl": "https://cloud.google.com/storage/docs/uploading-objects"
+        },
+        {
+          "name": "destinationPath",
+          "viewName": "Destination Path",
+          "type": "string",
+          "description": "Destination path in the bucket, including object's name",
+          "placeholder": "folder1/myfile_in_bucket",
           "learnUrl": "https://cloud.google.com/storage/docs/uploading-objects"
         }
       ]
@@ -178,55 +188,6 @@
           "autocompleteType": "function",
           "functionName": "listFilesAuto",
           "learnUrl": "https://cloud.google.com/storage/docs/samples/storage-delete-file"
-        }
-      ]
-    },
-    {
-      "name": "createFolder",
-      "viewName": "Upload File into Folder",
-      "description": "Creates a folder into the bucket where the file will be uploaded.",
-      "learnUrl": "https://cloud.google.com/storage/docs/uploading-objects",
-      "params": [
-        {
-          "name": "projectId",
-          "viewName": "Project ID",
-          "type": "string",
-          "description": "The ID of the default project to send requests to.",
-          "placeholder": "my-project",
-          "learnUrl": "https://cloud.google.com/docs/authentication/production"
-        },
-        {
-          "name": "bucketName",
-          "viewName": "Bucket Name",
-          "type": "autocomplete",
-          "autocompleteType": "function",
-          "functionName": "listBucketsAuto",
-          "placeholder": "my-bucket",
-          "learnUrl": "https://cloud.google.com/storage/docs/creating-buckets"
-        },
-        {
-          "name": "folderName",
-          "viewName": "Folder Name",
-          "type": "string",
-          "description": "Folder name where the file will be stored into the given bucket.",
-          "placeholder": "my-Folder",
-          "learnUrl": "https://cloud.google.com/storage/docs/uploading-objects"
-        },
-        {
-          "name": "fileName",
-          "viewName": "File Name",
-          "type": "string",
-          "description": "File name with extension that is to be uploaded.",
-          "placeholder": "my-File.txt",
-          "learnUrl": "https://cloud.google.com/storage/docs/uploading-objects"
-        },
-        {
-          "name": "filePath",
-          "viewName": "File Path",
-          "type": "string",
-          "description": "File Location/Path",
-          "placeholder": "d:/myfile.txt",
-          "learnUrl": "https://cloud.google.com/storage/docs/uploading-objects"
         }
       ]
     },

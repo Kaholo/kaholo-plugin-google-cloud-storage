@@ -1,3 +1,5 @@
+const { stat } = require("fs/promises");
+const { basename, join } = require("path");
 const GoogleCloudStorageClient = require("@google-cloud/storage");
 const kaholoPluginLibrary = require("@kaholo/plugin-library");
 
@@ -5,6 +7,10 @@ const {
   listBuckets: listBucketsAuto,
   listFiles: listFilesAuto,
 } = require("./autocomplete");
+const {
+  assertPathExistence,
+  listDirectoryRecursively,
+} = require("./helpers");
 
 async function createBucket(params) {
   const {
@@ -40,19 +46,44 @@ async function deleteBucket(params) {
   return storageClient.bucket(bucketName).delete();
 }
 
-function uploadFile(params) {
+async function upload(params) {
   const {
     projectId,
     credentials,
     bucketName,
-    filePath,
+    sourcePath,
+    destinationPath,
   } = params;
 
   const storageClient = new GoogleCloudStorageClient({ projectId, credentials });
 
+  await assertPathExistence(sourcePath);
+  const pathStat = await stat(sourcePath);
+
+  if (!pathStat.isFile() && !pathStat.isDirectory()) {
+    throw new Error("Unsupported path type! Path must point to a file or a directory.");
+  }
+
+  if (pathStat.isDirectory()) {
+    const directoryFiles = await listDirectoryRecursively(sourcePath);
+    const baseName = destinationPath ?? basename(sourcePath);
+    const filesToUpload = directoryFiles.map((fileName) => ({
+      source: join(sourcePath, fileName),
+      destination: join(baseName, fileName),
+    }));
+
+    return Promise.all(filesToUpload.map(({ source, destination }) => (
+      storageClient
+        .bucket(bucketName)
+        .upload(source, { destination })
+    )));
+  }
+
   return storageClient
     .bucket(bucketName)
-    .upload(filePath);
+    .upload(sourcePath, {
+      destination: destinationPath,
+    });
 }
 
 function deleteFile(params) {
@@ -70,24 +101,24 @@ function deleteFile(params) {
     .deleteFiles({ prefix: fileName });
 }
 
-function createFolder(params) {
-  const {
-    projectId,
-    credentials,
-    bucketName,
-    folderName,
-    filePath,
-    fileName,
-  } = params;
+// function createFolder(params) {
+//   const {
+//     projectId,
+//     credentials,
+//     bucketName,
+//     folderName,
+//     filePath,
+//     fileName,
+//   } = params;
 
-  const storageClient = new GoogleCloudStorageClient({ projectId, credentials });
+//   const storageClient = new GoogleCloudStorageClient({ projectId, credentials });
 
-  return storageClient
-    .bucket(bucketName)
-    .upload(filePath, {
-      destination: `${folderName}/${fileName}`,
-    });
-}
+//   return storageClient
+//     .bucket(bucketName)
+//     .upload(filePath, {
+//       destination: `${folderName}/${fileName}`,
+//     });
+// }
 
 function listBuckets(params) {
   const {
@@ -103,9 +134,8 @@ function listBuckets(params) {
 module.exports = kaholoPluginLibrary.bootstrap({
   createBucket,
   deleteBucket,
-  uploadFile,
+  upload,
   deleteFile,
-  createFolder,
   listBuckets,
 }, {
   listFilesAuto,
