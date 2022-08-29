@@ -89,8 +89,8 @@ function createFolder(params) {
 
 function listBuckets(params) {
   const {
-    PROJECT: projectId,
-    CREDENTIALS: credentials,
+    projectId,
+    credentials,
   } = params;
 
   const storageClient = new GoogleCloudStorageClient({ projectId, credentials });
