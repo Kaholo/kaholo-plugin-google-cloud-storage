@@ -64,8 +64,7 @@ function deleteFile(params) {
 
   return storageClient
     .bucket(bucketName)
-    .file(fileName)
-    .delete();
+    .deleteFiles({ prefix: fileName });
 }
 
 function createFolder(params) {
