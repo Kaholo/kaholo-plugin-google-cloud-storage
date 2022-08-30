@@ -10,7 +10,7 @@ const {
 const {
   assertPathExistence,
   listDirectoryRecursively,
-} = require("./helpers");
+} = require("./fs-helpers");
 
 async function createBucket(params) {
   const {
