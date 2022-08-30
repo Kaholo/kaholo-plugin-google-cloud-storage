@@ -101,25 +101,6 @@ function deleteFile(params) {
     .deleteFiles({ prefix: fileName });
 }
 
-// function createFolder(params) {
-//   const {
-//     projectId,
-//     credentials,
-//     bucketName,
-//     folderName,
-//     filePath,
-//     fileName,
-//   } = params;
-
-//   const storageClient = new GoogleCloudStorageClient({ projectId, credentials });
-
-//   return storageClient
-//     .bucket(bucketName)
-//     .upload(filePath, {
-//       destination: `${folderName}/${fileName}`,
-//     });
-// }
-
 function listBuckets(params) {
   const {
     projectId,
