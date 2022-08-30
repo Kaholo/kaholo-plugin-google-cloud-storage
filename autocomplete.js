@@ -3,10 +3,8 @@ const _ = require("lodash");
 
 function createAutocompleteFunction(fetchItems, { valuePath, idPath = "" }) {
   return async (query, params) => {
-    const {
-      PROJECT: projectId,
-      CREDENTIALS: credentials,
-    } = params;
+    const { projectId } = params;
+    const credentials = JSON.parse(params.credentials);
 
     const storageClient = new GoogleCloudStorageClient({ projectId, credentials });
     const items = await fetchItems(storageClient, params);
@@ -43,7 +41,7 @@ module.exports = {
   listFiles: createAutocompleteFunction(
     (storageClient, params) => (
       storageClient
-        .bucket(params.NAME)
+        .bucket(params.bucketName)
         .getFiles()
         .then(([files]) => files)
     ),

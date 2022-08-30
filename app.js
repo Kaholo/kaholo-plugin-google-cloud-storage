@@ -1,7 +1,10 @@
 const GoogleCloudStorageClient = require("@google-cloud/storage");
 const kaholoPluginLibrary = require("@kaholo/plugin-library");
 
-const autocomplete = require("./autocomplete");
+const {
+  listBuckets: listBucketsAuto,
+  listFiles: listFilesAuto,
+} = require("./autocomplete");
 
 async function createBucket(params) {
   const {
@@ -64,8 +67,7 @@ function deleteFile(params) {
 
   return storageClient
     .bucket(bucketName)
-    .file(fileName)
-    .delete();
+    .deleteFiles({ prefix: fileName });
 }
 
 function createFolder(params) {
@@ -89,8 +91,8 @@ function createFolder(params) {
 
 function listBuckets(params) {
   const {
-    PROJECT: projectId,
-    CREDENTIALS: credentials,
+    projectId,
+    credentials,
   } = params;
 
   const storageClient = new GoogleCloudStorageClient({ projectId, credentials });
@@ -105,4 +107,7 @@ module.exports = kaholoPluginLibrary.bootstrap({
   deleteFile,
   createFolder,
   listBuckets,
-}, autocomplete);
+}, {
+  listFilesAuto,
+  listBucketsAuto,
+});

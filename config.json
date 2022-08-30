@@ -109,7 +109,7 @@
           "viewName": "Bucket Name",
           "type": "autocomplete",
           "autocompleteType": "function",
-          "functionName": "listBuckets",
+          "functionName": "listBucketsAuto",
           "placeholder": "my-bucket",
           "learnUrl": "https://cloud.google.com/storage/docs/deleting-buckets"
         }
@@ -134,7 +134,7 @@
           "viewName": "Bucket Name",
           "type": "autocomplete",
           "autocompleteType": "function",
-          "functionName": "listBuckets",
+          "functionName": "listBucketsAuto",
           "placeholder": "my-bucket",
           "learnUrl": "https://cloud.google.com/storage/docs/creating-buckets"
         },
@@ -167,7 +167,7 @@
           "viewName": "Bucket Name",
           "type": "autocomplete",
           "autocompleteType": "function",
-          "functionName": "listBuckets",
+          "functionName": "listBucketsAuto",
           "placeholder": "my-bucket",
           "learnUrl": "https://cloud.google.com/storage/docs/creating-buckets"
         },
@@ -176,7 +176,7 @@
           "viewName": "File Name",
           "type": "autocomplete",
           "autocompleteType": "function",
-          "functionName": "listFiles",
+          "functionName": "listFilesAuto",
           "learnUrl": "https://cloud.google.com/storage/docs/samples/storage-delete-file"
         }
       ]
@@ -200,7 +200,7 @@
           "viewName": "Bucket Name",
           "type": "autocomplete",
           "autocompleteType": "function",
-          "functionName": "listBuckets",
+          "functionName": "listBucketsAuto",
           "placeholder": "my-bucket",
           "learnUrl": "https://cloud.google.com/storage/docs/creating-buckets"
         },
@@ -235,7 +235,7 @@
       "viewName": "List Buckets",
       "params": [
         {
-          "name": "PROJECT",
+          "name": "projectId",
           "viewName": "Project ID",
           "type": "string",
           "description": "The ID of the default project to send requests to.",
