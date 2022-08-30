@@ -30,7 +30,7 @@ function createAutocompleteFunction(fetchItems, { valuePath, idPath = "" }) {
 }
 
 module.exports = {
-  listBucketsAuto: createAutocompleteFunction(
+  listBuckets: createAutocompleteFunction(
     (storageClient) => (
       storageClient
         .getBuckets()
@@ -38,7 +38,7 @@ module.exports = {
     ),
     { valuePath: "name" },
   ),
-  listFilesAuto: createAutocompleteFunction(
+  listFiles: createAutocompleteFunction(
     (storageClient, params) => (
       storageClient
         .bucket(params.bucketName)
