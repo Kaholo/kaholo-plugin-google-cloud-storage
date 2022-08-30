@@ -55,14 +55,14 @@ async function upload(params) {
     destinationPath,
   } = params;
 
-  const storageClient = new GoogleCloudStorageClient({ projectId, credentials });
-
   await assertPathExistence(sourcePath);
   const pathStat = await stat(sourcePath);
 
   if (!pathStat.isFile() && !pathStat.isDirectory()) {
     throw new Error("Unsupported path type! Path must point to a file or a directory.");
   }
+
+  const storageClient = new GoogleCloudStorageClient({ projectId, credentials });
 
   if (pathStat.isDirectory()) {
     const directoryFiles = await listDirectoryRecursively(sourcePath);
