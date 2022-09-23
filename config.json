@@ -7,7 +7,7 @@
   "main": "app.js",
   "version": "2.0.0",
   "imgUrl": "logo.png",
-  "category": ["CLOUD", "STORAGE"],
+  "category": "Storage",
   "keywords": ["gcp", "cloud", "storage", "bucket"],
   "auth": {
     "authId": "gcpAccount",
