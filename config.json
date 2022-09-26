@@ -1,6 +1,7 @@
 {
   "name": "Google-Cloud-Storage",
   "viewName": "Google Cloud Storage",
+  "description": "Object storage in Google Cloud Platform",
   "type": "executer",
   "exposeRoute": false,
   "execProgram": "node",
@@ -160,8 +161,8 @@
     },
     {
       "name": "deleteFile",
-      "viewName": "Delete File",
-      "description": "Delets a file from the specified bucket.",
+      "viewName": "Delete Object(s)",
+      "description": "Deletes a file from the specified bucket.",
       "learnUrl": "https://cloud.google.com/storage/docs/samples/storage-delete-file",
       "params": [
         {

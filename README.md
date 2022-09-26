@@ -74,8 +74,8 @@ Upload a file or directory (recursively) to the specified bucket. If a directory
 * Source Path - Path, relative or absolute, to the file or directory on the Kaholo Agent to be uploaded
 * Destination Path - Destination path in the bucket, including the object's name if it is a single file
 
-## Method: Delete File
-Delete a specific cloud storage object
+## Method: Delete Object(s)
+Deletes a specific cloud storage object. This deletes all objects that begin with the specified string, so may be used for example to delete many objects at once or to "recursively" delete objects that appear to be directories.
 
 ### Parameters
 * Project ID - The ID of the project to which the bucket belongs
