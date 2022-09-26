@@ -75,7 +75,7 @@ Upload a file or directory (recursively) to the specified bucket. If a directory
 * Destination Path - Destination path in the bucket, including the object's name if it is a single file
 
 ## Method: Delete Object(s)
-Deletes a specific cloud storage object. This deletes all objects that begin with the specified string, so may be used for example to delete many objects at once or to "recursively" delete objects that appear to be directories.
+Deletes a specific cloud storage object, selected using autocomplete. Using code layer, all objects that <em>begin with</em> the specified string are deleted. This may be used to delete many objects at once or to "recursively" delete objects that appear to be directories. To use the code layer, toggle the code switch on, and enter a string using single quotes and no wild card characters.
 
 ### Parameters
 * Project ID - The ID of the project to which the bucket belongs
