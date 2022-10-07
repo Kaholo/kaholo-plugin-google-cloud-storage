@@ -1,4 +1,4 @@
-const { join } = require("path");
+const { join, dirname } = require("path");
 const fs = require("fs");
 const { stat, readdir } = require("fs/promises");
 
@@ -28,7 +28,17 @@ async function listDirectoryRecursively(directoryPath) {
   return recursiveDirectoryFiles.flat();
 }
 
+function getAllDirectoriesInPath(path) {
+  const directoryPath = dirname(path);
+  if (directoryPath === "." || directoryPath === "/") {
+    return [`${path}/`];
+  }
+
+  return [...getAllDirectoriesInPath(directoryPath), `${path}/`];
+}
+
 module.exports = {
   assertPathExistence,
   listDirectoryRecursively,
+  getAllDirectoriesInPath,
 };
