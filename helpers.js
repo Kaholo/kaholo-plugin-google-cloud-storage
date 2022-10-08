@@ -28,17 +28,17 @@ async function listDirectoryRecursively(directoryPath) {
   return recursiveDirectoryFiles.flat();
 }
 
-function getAllDirectoriesInPath(path) {
+function walkThroughParentDirectories(path) {
   const directoryPath = dirname(path);
   if (directoryPath === "." || directoryPath === "/") {
     return [`${path}/`];
   }
 
-  return [...getAllDirectoriesInPath(directoryPath), `${path}/`];
+  return [...walkThroughParentDirectories(directoryPath), `${path}/`];
 }
 
 module.exports = {
   assertPathExistence,
   listDirectoryRecursively,
-  getAllDirectoriesInPath,
+  walkThroughParentDirectories,
 };

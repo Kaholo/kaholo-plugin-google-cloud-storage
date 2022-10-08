@@ -2,7 +2,7 @@ const { dirname } = require("path");
 const GoogleCloudStorageClient = require("@google-cloud/storage");
 const _ = require("lodash");
 
-const { getAllDirectoriesInPath } = require("./helpers");
+const { walkThroughParentDirectories } = require("./helpers");
 
 function createAutocompleteFunction(fetchItems, { valuePath, idPath = "" }) {
   return async (query, params) => {
@@ -43,21 +43,24 @@ module.exports = {
   ),
   listFiles: createAutocompleteFunction(
     async (storageClient, params) => {
+      const directories = new Set();
       const files = await storageClient
         .bucket(params.bucketName)
         .getFiles()
         .then(([result]) => result);
 
-      const directories = new Set();
+      files.forEach(({ name: fileName }) => {
+        if (fileName.endsWith("/")) {
+          return;
+        }
 
-      files
-        .filter(({ name: fileName }) => !fileName.endsWith("/"))
-        .forEach(({ name: fileName }) => {
-          const parentDir = dirname(fileName);
-          if (!directories.has(parentDir)) {
-            getAllDirectoriesInPath(parentDir).forEach((path) => directories.add(path));
-          }
-        });
+        const parentDir = dirname(fileName);
+        if (!directories.has(parentDir)) {
+          walkThroughParentDirectories(parentDir).forEach(
+            (path) => directories.add(path),
+          );
+        }
+      });
 
       const directoryEntries = [...directories].map((directoryPath) => ({
         name: directoryPath,
