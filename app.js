@@ -4,23 +4,22 @@ const GoogleCloudStorageClient = require("@google-cloud/storage");
 const kaholoPluginLibrary = require("@kaholo/plugin-library");
 
 const {
-  listBuckets: listBucketsAuto,
-  listFiles: listFilesAuto,
-} = require("./autocomplete");
-const {
   assertPathExistence,
   listDirectoryRecursively,
+  parseCredentials,
 } = require("./helpers");
+const autocomplete = require("./autocomplete");
 
 async function createBucket(params) {
   const {
     projectId,
-    credentials,
+    credentials: rawCredentials,
     bucketName,
     classInfo,
     location,
   } = params;
 
+  const credentials = parseCredentials(rawCredentials);
   const storageClient = new GoogleCloudStorageClient({ projectId, credentials });
 
   const metadata = {};
@@ -37,10 +36,11 @@ async function createBucket(params) {
 async function deleteBucket(params) {
   const {
     projectId,
-    credentials,
+    credentials: rawCredentials,
     bucketName,
   } = params;
 
+  const credentials = parseCredentials(rawCredentials);
   const storageClient = new GoogleCloudStorageClient({ projectId, credentials });
 
   return storageClient.bucket(bucketName).delete();
@@ -49,11 +49,13 @@ async function deleteBucket(params) {
 async function upload(params) {
   const {
     projectId,
-    credentials,
+    credentials: rawCredentials,
     bucketName,
     sourcePath,
     destinationPath,
   } = params;
+
+  const credentials = parseCredentials(rawCredentials);
 
   await assertPathExistence(sourcePath);
   const pathStat = await stat(sourcePath);
@@ -89,11 +91,12 @@ async function upload(params) {
 function deleteFile(params) {
   const {
     projectId,
-    credentials,
+    credentials: rawCredentials,
     bucketName,
     fileName,
   } = params;
 
+  const credentials = parseCredentials(rawCredentials);
   const storageClient = new GoogleCloudStorageClient({ projectId, credentials });
 
   return storageClient
@@ -104,9 +107,10 @@ function deleteFile(params) {
 function listBuckets(params) {
   const {
     projectId,
-    credentials,
+    credentials: rawCredentials,
   } = params;
 
+  const credentials = parseCredentials(rawCredentials);
   const storageClient = new GoogleCloudStorageClient({ projectId, credentials });
 
   return storageClient.getBuckets();
@@ -118,7 +122,4 @@ module.exports = kaholoPluginLibrary.bootstrap({
   upload,
   deleteFile,
   listBuckets,
-}, {
-  listFilesAuto,
-  listBucketsAuto,
-});
+}, autocomplete);

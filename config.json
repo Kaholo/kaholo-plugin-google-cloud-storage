@@ -17,7 +17,6 @@
         "name": "credentials",
         "viewName": "Service Account Credentials",
         "type": "vault",
-        "parserType": "object",
         "description": "Default service account credentials",
         "learnUrl": "https://cloud.google.com/docs/authentication/production"
       }
