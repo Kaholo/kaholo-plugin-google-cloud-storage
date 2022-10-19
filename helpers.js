@@ -37,8 +37,17 @@ function walkThroughParentDirectories(path) {
   return [...walkThroughParentDirectories(directoryPath), `${path}/`];
 }
 
+function parseCredentials(jsonCredentials) {
+  try {
+    return JSON.parse(jsonCredentials);
+  } catch (e) {
+    throw new Error(`The vaulted credentials are not in a valid JSON format. Please sure you are using the JSON version of GCP credentials and that extra newline characters were not inserted during copy/paste. The detailed error message: ${e.message}`);
+  }
+}
+
 module.exports = {
   assertPathExistence,
   listDirectoryRecursively,
   walkThroughParentDirectories,
+  parseCredentials,
 };

@@ -2,13 +2,16 @@ const { dirname } = require("path");
 const GoogleCloudStorageClient = require("@google-cloud/storage");
 const _ = require("lodash");
 
-const { walkThroughParentDirectories } = require("./helpers");
+const {
+  walkThroughParentDirectories,
+  parseCredentials,
+} = require("./helpers");
 
 function createAutocompleteFunction(fetchItems, { valuePath, idPath = "" }) {
   return async (query, params) => {
     const { projectId } = params;
-    const credentials = JSON.parse(params.credentials);
 
+    const credentials = parseCredentials(params.credentials);
     const storageClient = new GoogleCloudStorageClient({ projectId, credentials });
     const items = await fetchItems(storageClient, params);
 
