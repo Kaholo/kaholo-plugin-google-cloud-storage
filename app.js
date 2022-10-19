@@ -19,6 +19,7 @@ async function createBucket(params) {
     bucketName,
     classInfo,
     location,
+    accessControl,
   } = params;
 
   const storageClient = new GoogleCloudStorageClient({ projectId, credentials });
@@ -31,7 +32,19 @@ async function createBucket(params) {
     metadata.location = location;
   }
 
-  return storageClient.createBucket(bucketName, metadata);
+  const [bucket] = await storageClient.createBucket(bucketName, metadata);
+
+  if (accessControl === "uniform") {
+    await storageClient.bucket(bucketName).setMetadata({
+      iamConfiguration: {
+        uniformBucketLevelAccess: {
+          enabled: true,
+        },
+      },
+    });
+  }
+
+  return bucket;
 }
 
 async function deleteBucket(params) {

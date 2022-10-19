@@ -31,6 +31,23 @@
       "description": "The ID of the default project to send requests to.",
       "placeholder": "my-project",
       "learnUrl": "https://cloud.google.com/resource-manager/docs/creating-managing-projects"
+    },
+    {
+      "name": "accessControl",
+      "viewName": "Default Access Control",
+      "description": "Access control model to use by default for new buckets",
+      "learnUrl": "https://cloud.google.com/storage/docs/access-control",
+      "type": "options",
+      "options": [
+        {
+          "id": "uniform",
+          "name": "Uniform"
+        },
+        {
+          "id": "fine-grained",
+          "name": "Fine-grained"
+        }
+      ]
     }
   ],
   "methods": [
@@ -88,6 +105,24 @@
           "description": "Cloud Location",
           "placeholder": "us-west2",
           "learnUrl": "https://cloud.google.com/about/locations"
+        },
+        {
+          "name": "accessControl",
+          "viewName": "Access Control",
+          "description": "Select access control model for this bucket",
+          "learnUrl": "https://cloud.google.com/storage/docs/access-control",
+          "type": "options",
+          "options": [
+            {
+              "id": "uniform",
+              "name": "Uniform"
+            },
+            {
+              "id": "fine-grained",
+              "name": "Fine-grained"
+            }
+          ],
+          "default": "uniform"
         }
       ]
     },
