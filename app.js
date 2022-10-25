@@ -8,7 +8,10 @@ const {
   listDirectoryRecursively,
   parseCredentials,
 } = require("./helpers");
-const autocomplete = require("./autocomplete");
+const {
+  listBucketsAuto,
+  listFilesAuto,
+} = require("./autocomplete");
 
 async function createBucket(params) {
   const {
@@ -135,4 +138,7 @@ module.exports = kaholoPluginLibrary.bootstrap({
   upload,
   deleteFile,
   listBuckets,
-}, autocomplete);
+}, {
+  listBucketsAuto,
+  listFilesAuto,
+});
