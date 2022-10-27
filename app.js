@@ -9,8 +9,8 @@ const {
   parseCredentials,
 } = require("./helpers");
 const {
-  listBucketsAuto,
-  listFilesAuto,
+  listBuckets: listBucketsAuto,
+  listFiles: listFilesAuto,
 } = require("./autocomplete");
 
 async function createBucket(params) {
@@ -28,7 +28,7 @@ async function createBucket(params) {
 
   const metadata = {};
   if (classInfo) {
-    metadata[classInfo] = classInfo;
+    metadata[classInfo.toLowerCase()] = true;
   }
   if (location) {
     metadata.location = location;
