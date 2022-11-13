@@ -54,9 +54,10 @@ Create a new bucket on the cloud.
 
 ### Parameters:
 * Project ID - The ID of the project in which the bucket will be created
+* Region - The GCP geographical location in which to create the bucket. You can see list of available locations [here](https://cloud.google.com/storage/docs/locations).
 * Bucket Name - The name of the bucket to create
 * Storage Class - The type of storage class of the bucket to create
-* Location - The GCP geographical location in which to create the bucket. You can see list of available locations [here](https://cloud.google.com/storage/docs/locations).
+* Access Control - The type of access control for permissions of the bucket
 
 ## Method: Delete Bucket
 Delete the specified bucket from the cloud.
@@ -80,7 +81,7 @@ Deletes a specific cloud storage object, selected using autocomplete. Using code
 ### Parameters
 * Project ID - The ID of the project to which the bucket belongs
 * Bucket Name - The name of the bucket containing the object to be deleted
-* File Name - The name of the object to delete
+* Object(s) Name - The name of the object to delete
 
 ## Method: List Buckets
 List all buckets in the specified project
