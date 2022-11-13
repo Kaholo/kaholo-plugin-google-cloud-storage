@@ -1,7 +1,7 @@
 {
   "name": "Google-Cloud-Storage",
   "viewName": "Google Cloud Storage",
-  "description": "Object storage in Google Cloud Platform",
+  "description": "Object Storage in Google Cloud Platform",
   "type": "executer",
   "exposeRoute": false,
   "execProgram": "node",
@@ -60,14 +60,23 @@
           "name": "projectId",
           "viewName": "Project ID",
           "type": "string",
-          "description": "The ID of the default project to send requests to.",
+          "description": "The ID of the project in which a bucket is created",
           "placeholder": "my-project",
           "learnUrl": "https://cloud.google.com/docs/authentication/production"
+        },
+        {
+          "name": "location",
+          "viewName": "Region",
+          "type": "string",
+          "description": "Geographical region where the new bucket will be created",
+          "placeholder": "us-west2",
+          "learnUrl": "https://cloud.google.com/about/locations"
         },
         {
           "name": "bucketName",
           "viewName": "Bucket Name",
           "type": "string",
+          "description": "The name of the bucket to create",
           "placeholder": "my-bucket",
           "learnUrl": "https://cloud.google.com/storage/docs/creating-buckets"
         },  
@@ -75,7 +84,7 @@
           "name": "classInfo",
           "viewName": "Storage Class",
           "type": "options",
-          "description": "The storage class to be applied.",
+          "description": "The storage class of the new bucket",
           "placeholder": "Standard | Nearline | Coldline | Archive",
           "learnUrl": "https://cloud.google.com/storage/docs/storage-classes",
           "options": [
@@ -98,17 +107,9 @@
           ]
         },
         {
-          "name": "location",
-          "viewName": "Location",
-          "type": "string",
-          "description": "Cloud Location",
-          "placeholder": "us-west2",
-          "learnUrl": "https://cloud.google.com/about/locations"
-        },
-        {
           "name": "accessControl",
           "viewName": "Access Control",
-          "description": "Select access control model for this bucket",
+          "description": "The access control model for the new bucket",
           "learnUrl": "https://cloud.google.com/storage/docs/access-control",
           "type": "options",
           "options": [
@@ -135,7 +136,7 @@
           "name": "projectId",
           "viewName": "Project ID",
           "type": "string",
-          "description": "The ID of the default project to send requests to.",
+          "description": "The ID of the project of the bucket to be deleted",
           "placeholder": "my-project",
           "learnUrl": "https://cloud.google.com/docs/authentication/production"
         },
@@ -143,6 +144,7 @@
           "name": "bucketName",
           "viewName": "Bucket Name",
           "type": "autocomplete",
+          "description": "The name of the bucket to delete",
           "autocompleteType": "function",
           "functionName": "listBucketsAuto",
           "placeholder": "my-bucket",
@@ -160,7 +162,7 @@
           "name": "projectId",
           "viewName": "Project ID",
           "type": "string",
-          "description": "The ID of the default project to send requests to.",
+          "description": "The ID of the project of the bucket for upload",
           "placeholder": "my-project",
           "learnUrl": "https://cloud.google.com/docs/authentication/production"
         },
@@ -168,6 +170,7 @@
           "name": "bucketName",
           "viewName": "Bucket Name",
           "type": "autocomplete",
+          "description": "The name of the bucket for upload",
           "required": true,
           "autocompleteType": "function",
           "functionName": "listBucketsAuto",
@@ -187,8 +190,8 @@
           "name": "destinationPath",
           "viewName": "Destination Path",
           "type": "string",
-          "description": "Destination path in the bucket, including object's name",
-          "placeholder": "folder1/myfile_in_bucket",
+          "description": "Destination path in the bucket, including file/folder name",
+          "placeholder": "drive_d/myfile",
           "learnUrl": "https://cloud.google.com/storage/docs/uploading-objects"
         }
       ]
@@ -196,14 +199,14 @@
     {
       "name": "deleteFile",
       "viewName": "Delete Object(s)",
-      "description": "Deletes a file from the specified bucket.",
+      "description": "Deletes object(s) from the specified bucket",
       "learnUrl": "https://cloud.google.com/storage/docs/samples/storage-delete-file",
       "params": [
         {
           "name": "projectId",
           "viewName": "Project ID",
           "type": "string",
-          "description": "The ID of the default project to send requests to.",
+          "description": "The ID of the project to which the bucket belongs",
           "placeholder": "my-project",
           "learnUrl": "https://cloud.google.com/docs/authentication/production"
         },
@@ -211,6 +214,7 @@
           "name": "bucketName",
           "viewName": "Bucket Name",
           "type": "autocomplete",
+          "description": "The bucket from which to delete objects",
           "autocompleteType": "function",
           "functionName": "listBucketsAuto",
           "placeholder": "my-bucket",
@@ -218,7 +222,8 @@
         },
         {
           "name": "fileName",
-          "viewName": "File Name",
+          "viewName": "Object Name",
+          "description": "All objects beginning with this name/path will be deleted.",
           "type": "autocomplete",
           "autocompleteType": "function",
           "functionName": "listFilesAuto",
@@ -234,7 +239,7 @@
           "name": "projectId",
           "viewName": "Project ID",
           "type": "string",
-          "description": "The ID of the default project to send requests to.",
+          "description": "The ID of the project for which all buckets are to be listed",
           "placeholder": "my-project",
           "learnUrl": "https://cloud.google.com/docs/authentication/production"
         }
