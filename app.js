@@ -4,43 +4,59 @@ const GoogleCloudStorageClient = require("@google-cloud/storage");
 const kaholoPluginLibrary = require("@kaholo/plugin-library");
 
 const {
+  assertPathExistence,
+  listDirectoryRecursively,
+  parseCredentials,
+} = require("./helpers");
+const {
   listBuckets: listBucketsAuto,
   listFiles: listFilesAuto,
 } = require("./autocomplete");
-const {
-  assertPathExistence,
-  listDirectoryRecursively,
-} = require("./fs-helpers");
 
 async function createBucket(params) {
   const {
     projectId,
-    credentials,
+    credentials: rawCredentials,
     bucketName,
     classInfo,
     location,
+    accessControl,
   } = params;
 
+  const credentials = parseCredentials(rawCredentials);
   const storageClient = new GoogleCloudStorageClient({ projectId, credentials });
 
   const metadata = {};
   if (classInfo) {
-    metadata[classInfo] = classInfo;
+    metadata[classInfo.toLowerCase()] = true;
   }
   if (location) {
     metadata.location = location;
   }
 
-  return storageClient.createBucket(bucketName, metadata);
+  const [bucket] = await storageClient.createBucket(bucketName, metadata);
+
+  if (accessControl === "uniform") {
+    await storageClient.bucket(bucketName).setMetadata({
+      iamConfiguration: {
+        uniformBucketLevelAccess: {
+          enabled: true,
+        },
+      },
+    });
+  }
+
+  return bucket;
 }
 
 async function deleteBucket(params) {
   const {
     projectId,
-    credentials,
+    credentials: rawCredentials,
     bucketName,
   } = params;
 
+  const credentials = parseCredentials(rawCredentials);
   const storageClient = new GoogleCloudStorageClient({ projectId, credentials });
 
   return storageClient.bucket(bucketName).delete();
@@ -49,11 +65,13 @@ async function deleteBucket(params) {
 async function upload(params) {
   const {
     projectId,
-    credentials,
+    credentials: rawCredentials,
     bucketName,
     sourcePath,
     destinationPath,
   } = params;
+
+  const credentials = parseCredentials(rawCredentials);
 
   await assertPathExistence(sourcePath);
   const pathStat = await stat(sourcePath);
@@ -89,11 +107,12 @@ async function upload(params) {
 function deleteFile(params) {
   const {
     projectId,
-    credentials,
+    credentials: rawCredentials,
     bucketName,
     fileName,
   } = params;
 
+  const credentials = parseCredentials(rawCredentials);
   const storageClient = new GoogleCloudStorageClient({ projectId, credentials });
 
   return storageClient
@@ -104,9 +123,10 @@ function deleteFile(params) {
 function listBuckets(params) {
   const {
     projectId,
-    credentials,
+    credentials: rawCredentials,
   } = params;
 
+  const credentials = parseCredentials(rawCredentials);
   const storageClient = new GoogleCloudStorageClient({ projectId, credentials });
 
   return storageClient.getBuckets();
@@ -119,6 +139,6 @@ module.exports = kaholoPluginLibrary.bootstrap({
   deleteFile,
   listBuckets,
 }, {
-  listFilesAuto,
   listBucketsAuto,
+  listFilesAuto,
 });

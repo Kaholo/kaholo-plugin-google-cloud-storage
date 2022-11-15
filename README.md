@@ -54,9 +54,10 @@ Create a new bucket on the cloud.
 
 ### Parameters:
 * Project ID - The ID of the project in which the bucket will be created
+* Region - The GCP geographical location in which to create the bucket. You can see list of available locations [here](https://cloud.google.com/storage/docs/locations).
 * Bucket Name - The name of the bucket to create
 * Storage Class - The type of storage class of the bucket to create
-* Location - The GCP geographical location in which to create the bucket. You can see list of available locations [here](https://cloud.google.com/storage/docs/locations).
+* Access Control - The type of access control for permissions of the bucket
 
 ## Method: Delete Bucket
 Delete the specified bucket from the cloud.
@@ -74,13 +75,13 @@ Upload a file or directory (recursively) to the specified bucket. If a directory
 * Source Path - Path, relative or absolute, to the file or directory on the Kaholo Agent to be uploaded
 * Destination Path - Destination path in the bucket, including the object's name if it is a single file
 
-## Method: Delete File
-Delete a specific cloud storage object
+## Method: Delete Object(s)
+Deletes a specific cloud storage object, selected using autocomplete. Using code layer, all objects that <em>begin with</em> the specified string are deleted. This may be used to delete many objects at once or to "recursively" delete objects that appear to be directories. To use the code layer, toggle the code switch on, and enter a string using single quotes and no wild card characters.
 
 ### Parameters
 * Project ID - The ID of the project to which the bucket belongs
 * Bucket Name - The name of the bucket containing the object to be deleted
-* File Name - The name of the object to delete
+* Object(s) Name - The name of the object to delete
 
 ## Method: List Buckets
 List all buckets in the specified project
