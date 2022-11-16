@@ -9,7 +9,7 @@
   "author": "Kaholo Team",
   "license": "ISC",
   "dependencies": {
-    "@google-cloud/storage": "1.6.0",
+    "@google-cloud/storage": "6.7.0",
     "@kaholo/plugin-library": "^2.1.2",
     "lodash": "4.17.21"
   },
