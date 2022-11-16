@@ -1,95 +1,144 @@
-const GoogleCloudStorage = require('./google-cloud-services')
-const parsers = require('./parsers')
+const { stat } = require("fs/promises");
+const { basename, join } = require("path");
+const GoogleCloudStorageClient = require("@google-cloud/storage");
+const kaholoPluginLibrary = require("@kaholo/plugin-library");
 
-const CREATE_BUCKET = async(action, settings) => {
-    const projectId = parsers.string(action.params.PROJECT) || parsers.string(settings.PROJECT)
-    const credentials = parsers.json(action.params.CREDENTIALS) || parsers.json(settings.CREDENTIALS)
+const {
+  assertPathExistence,
+  listDirectoryRecursively,
+  parseCredentials,
+} = require("./helpers");
+const {
+  listBuckets: listBucketsAuto,
+  listFiles: listFilesAuto,
+} = require("./autocomplete");
 
-    const storageService = GoogleCloudStorage.from({
-        projectId : projectId,
-        credentials: credentials
-    })
+async function createBucket(params) {
+  const {
+    projectId,
+    credentials: rawCredentials,
+    bucketName,
+    classInfo,
+    location,
+    accessControl,
+  } = params;
 
-    const bucketname = parsers.string(action.params.NAME)
-    const classInfo = parsers.string(action.params.CLASS)
-    const location = parsers.string(action.params.LOCATION)
-    const metadata = {}
-    if(classInfo) metadata[classInfo] = classInfo
-    if(location) metadata.location = location
-    return storageService.createBucket({ bucketname: bucketname, metadata: metadata })
+  const credentials = parseCredentials(rawCredentials);
+  const storageClient = new GoogleCloudStorageClient({ projectId, credentials });
+
+  const metadata = {};
+  if (classInfo) {
+    metadata[classInfo.toLowerCase()] = true;
+  }
+  if (location) {
+    metadata.location = location;
+  }
+
+  const [bucket] = await storageClient.createBucket(bucketName, metadata);
+
+  if (accessControl === "uniform") {
+    await storageClient.bucket(bucketName).setMetadata({
+      iamConfiguration: {
+        uniformBucketLevelAccess: {
+          enabled: true,
+        },
+      },
+    });
+  }
+
+  return bucket;
 }
 
-const DELETE_BUCKET = async (action, settings)=>{
-    const projectId = parsers.string(action.params.PROJECT) || parsers.string(settings.PROJECT)
-    const credentials = parsers.json(action.params.CREDENTIALS) || parsers.json(settings.CREDENTIALS)
+async function deleteBucket(params) {
+  const {
+    projectId,
+    credentials: rawCredentials,
+    bucketName,
+  } = params;
 
-    const storageService = GoogleCloudStorage.from({
-        projectId : projectId,
-        credentials: credentials
-    })
+  const credentials = parseCredentials(rawCredentials);
+  const storageClient = new GoogleCloudStorageClient({ projectId, credentials });
 
-    const bucketname = parsers.autocomplete(action.params.NAME)
-    return storageService.deleteBucket({ bucketname: bucketname })
+  return storageClient.bucket(bucketName).delete();
 }
 
-const UPLOAD_FILE = async(action, settings)=>{
-    const projectId = parsers.string(action.params.PROJECT) || parsers.string(settings.PROJECT)
-    const credentials = parsers.json(action.params.CREDENTIALS) || parsers.json(settings.CREDENTIALS)
+async function upload(params) {
+  const {
+    projectId,
+    credentials: rawCredentials,
+    bucketName,
+    sourcePath,
+    destinationPath,
+  } = params;
 
-    const storageService = GoogleCloudStorage.from({
-        projectId : projectId,
-        credentials: credentials
-    })
+  const credentials = parseCredentials(rawCredentials);
 
-    const bucketname = parsers.autocomplete(action.params.NAME)
-    const filePath = parsers.string(action.params.FILE_PATH)
-    return storageService.uploadFile({ bucketname: bucketname, filePath: filePath })
+  await assertPathExistence(sourcePath);
+  const pathStat = await stat(sourcePath);
+
+  if (!pathStat.isFile() && !pathStat.isDirectory()) {
+    throw new Error("Unsupported path type! Path must point to a file or a directory.");
+  }
+
+  const storageClient = new GoogleCloudStorageClient({ projectId, credentials });
+
+  if (pathStat.isDirectory()) {
+    const directoryFiles = await listDirectoryRecursively(sourcePath);
+    const baseName = destinationPath ?? basename(sourcePath);
+    const filesToUpload = directoryFiles.map((fileName) => ({
+      source: join(sourcePath, fileName),
+      destination: join(baseName, fileName),
+    }));
+
+    return Promise.all(filesToUpload.map(({ source, destination }) => (
+      storageClient
+        .bucket(bucketName)
+        .upload(source, { destination })
+    )));
+  }
+
+  return storageClient
+    .bucket(bucketName)
+    .upload(sourcePath, {
+      destination: destinationPath,
+    });
 }
 
-const DELETE_FILE = async(action, settings)=>{
-    const projectId = parsers.string(action.params.PROJECT) || parsers.string(settings.PROJECT)
-    const credentials = parsers.json(action.params.CREDENTIALS) || parsers.json(settings.CREDENTIALS)
+function deleteFile(params) {
+  const {
+    projectId,
+    credentials: rawCredentials,
+    bucketName,
+    fileName,
+  } = params;
 
-    const storageService = GoogleCloudStorage.from({
-        projectId : projectId,
-        credentials: credentials
-    })
-    const bucketname = parsers.autocomplete(action.params.NAME)
-    const fileName = parsers.autocomplete(action.params.FILE_NAME)
-    return storageService.deleteFile({
-        bucketname: bucketname,
-        fileName: fileName
-    })
+  const credentials = parseCredentials(rawCredentials);
+  const storageClient = new GoogleCloudStorageClient({ projectId, credentials });
+
+  return storageClient
+    .bucket(bucketName)
+    .deleteFiles({ prefix: fileName });
 }
 
-const CREATE_FOLDER = async (action, settings)=>{
-    const projectId = parsers.string(action.params.PROJECT) || parsers.string(settings.PROJECT)
-    const credentials = parsers.json(action.params.CREDENTIALS) || parsers.json(settings.CREDENTIALS)
+function listBuckets(params) {
+  const {
+    projectId,
+    credentials: rawCredentials,
+  } = params;
 
-    const storageService = GoogleCloudStorage.from({
-        projectId : projectId,
-        credentials: credentials
-    })
+  const credentials = parseCredentials(rawCredentials);
+  const storageClient = new GoogleCloudStorageClient({ projectId, credentials });
 
-    const bucketname = parsers.autocomplete(action.params.NAME)
-    const folderName = parsers.string(action.params.FOLDER_NAME)
-    const filePath = parsers.string(action.params.FILE_PATH)
-    const fileName = parsers.string(action.params.FILE_NAME)
-
-    return storageService.createFolder({
-        bucketname: bucketname,
-        folderName: folderName,
-        filePath: filePath,
-        fileName: fileName
-    })
+  return storageClient.getBuckets();
 }
 
-
-module.exports = {
-    CREATE_BUCKET,
-    DELETE_BUCKET,
-    UPLOAD_FILE,
-    DELETE_FILE,
-    CREATE_FOLDER,
-    ...require('./autocomplete')
-}
+module.exports = kaholoPluginLibrary.bootstrap({
+  createBucket,
+  deleteBucket,
+  upload,
+  deleteFile,
+  listBuckets,
+}, {
+  listBucketsAuto,
+  listFilesAuto,
+});

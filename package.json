@@ -1,14 +1,21 @@
 {
   "name": "kaholo-plugin-googlecloudstorage",
-  "version": "1.1.3",
   "description": "Google cloud storage plugin for Kaholo",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "npx eslint .",
+    "lint:fix": "npx eslint . --fix"
   },
   "author": "Kaholo Team",
   "license": "ISC",
   "dependencies": {
-    "@google-cloud/storage": "1.6.0"
+    "@google-cloud/storage": "1.6.0",
+    "@kaholo/plugin-library": "^2.1.2",
+    "lodash": "4.17.21"
+  },
+  "devDependencies": {
+    "eslint": "8.20.0",
+    "eslint-config-airbnb-base": "15.0.0",
+    "eslint-plugin-import": "2.26.0"
   }
 }
