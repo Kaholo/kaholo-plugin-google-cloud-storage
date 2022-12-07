@@ -94,6 +94,7 @@ async function upload(params) {
       storageClient
         .bucket(bucketName)
         .upload(source, { destination })
+        .then(([uploadResponse]) => uploadResponse)
     )));
   }
 
@@ -120,7 +121,7 @@ function deleteFile(params) {
     .deleteFiles({ prefix: fileName });
 }
 
-function listBuckets(params) {
+async function listBuckets(params) {
   const {
     projectId,
     credentials: rawCredentials,
@@ -129,7 +130,8 @@ function listBuckets(params) {
   const credentials = parseCredentials(rawCredentials);
   const storageClient = new GoogleCloudStorageClient({ projectId, credentials });
 
-  return storageClient.getBuckets();
+  const [bucketsList] = await storageClient.getBuckets();
+  return bucketsList;
 }
 
 module.exports = kaholoPluginLibrary.bootstrap({
