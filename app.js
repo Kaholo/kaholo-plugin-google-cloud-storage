@@ -94,6 +94,7 @@ async function upload(params) {
       storageClient
         .bucket(bucketName)
         .upload(source, { destination })
+        .then(([uploadResponse]) => uploadResponse)
     )));
   }
 
